@@ -65,7 +65,7 @@ rmdir heroku-client
 
 echo "$PWD"
 ls -l *
-$VENDORED_TOOLBELT/bin/heroku --help
+bin/heroku --help
 
 echo "-----> Moving the netrc generation script into app/.profile.d"
 mkdir -p $BUILD_DIR/.profile.d
