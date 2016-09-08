@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+echo "netrc..."
+
 cat >> ~/.netrc << EOF
 machine api.heroku.com
   login $HEROKU_TOOLBELT_API_EMAIL

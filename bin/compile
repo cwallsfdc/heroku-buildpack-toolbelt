@@ -66,4 +66,14 @@ mkdir -p $BUILD_DIR/.profile.d
 cp "$BUILDPACK_DIR/bin/gen-netrc.sh" $BUILD_DIR/.profile.d/
 chmod +x $BUILD_DIR/.profile.d/gen-netrc.sh
 
+cat >> ~/.netrc << EOF
+machine api.heroku.com
+  login $HEROKU_TOOLBELT_API_EMAIL
+  password $HEROKU_TOOLBELT_API_PASSWORD
+machine code.heroku.com
+  login $HEROKU_TOOLBELT_API_EMAIL
+  password $HEROKU_TOOLBELT_API_PASSWORD
+EOF
+
+
 echo "-----> heroku toolbelt installation done"
