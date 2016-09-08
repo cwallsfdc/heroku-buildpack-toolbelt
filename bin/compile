@@ -5,7 +5,7 @@
 set -e
 
 # debug
-set -x
+# set -x
 
 # clean up leaking environment
 unset GIT_DIR
@@ -58,14 +58,8 @@ else
   wget -qO- $HEROKU_CLIENT_URL | tar xz
 fi
 
-ls -l $BUILD_DIR/$VENDORED_TOOLBELT
-
 mv heroku-client/* .
 rmdir heroku-client
-
-echo "$PWD"
-ls -l *
-bin/heroku --help
 
 echo "-----> Moving the netrc generation script into app/.profile.d"
 mkdir -p $BUILD_DIR/.profile.d
