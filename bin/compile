@@ -54,9 +54,9 @@ mkdir -p "$BUILD_DIR/$VENDORED_TOOLBELT"
 cd "$BUILD_DIR/$VENDORED_TOOLBELT"
 
 if [[ -z "$(which wget)" ]]; then
-  curl -s $HEROKU_CLIENT_URL | tar xf
+  curl -s $HEROKU_CLIENT_URL | tar xJf -
 else
-  wget -qO- $HEROKU_CLIENT_URL | tar xf
+  wget -qO- $HEROKU_CLIENT_URL | tar xJf -
 fi
 
 cd heroku
