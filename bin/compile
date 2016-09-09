@@ -11,7 +11,8 @@ set -x
 unset GIT_DIR
 
 # config
-HEROKU_CLIENT_URL="http://assets.heroku.com.s3.amazonaws.com/heroku-client/heroku-client.tgz"
+#HEROKU_CLIENT_URL="http://assets.heroku.com.s3.amazonaws.com/heroku-client/heroku-client.tgz"
+HEROKU_CLIENT_URL="https://cli-assets.heroku.com/branches/stable/5.2.40-09fa7ac/heroku-v5.2.40-09fa7ac-linux-amd64.tar.xz"
 
 # parse and derive params
 BUILD_DIR=$1
@@ -42,7 +43,7 @@ function package_download() {
   curl $package -s -o - | tar xzf - -C $location
 }
 
-echo "-----> Fetching and vendoring Heroku Toolbelt into slug"
+echo "-----> Fetching and vendoring Heroku CLI into slug"
 
 # vendor directories
 VENDORED_TOOLBELT="vendor/heroku-toolbelt"
@@ -53,19 +54,18 @@ mkdir -p "$BUILD_DIR/$VENDORED_TOOLBELT"
 cd "$BUILD_DIR/$VENDORED_TOOLBELT"
 
 if [[ -z "$(which wget)" ]]; then
-  curl -s $HEROKU_CLIENT_URL | tar xz
+  curl -s $HEROKU_CLIENT_URL | tar xf
 else
-  wget -qO- $HEROKU_CLIENT_URL | tar xz
+  wget -qO- $HEROKU_CLIENT_URL | tar xf
 fi
 
-mv heroku-client/* .
-rmdir heroku-client
+cd heroku
+./install
+type heroku
 
-HEROKU_CLIENT="./bin/heroku"
-$HEROKU_CLIENT plugins:install salesforce-alm-dev
-$HEROKU_CLIENT plugins
-$HEROKU_CLIENT --help
-$HEROKU_CLIENT force --help
+heroku plugins:install salesforce-alm-dev
+heroku plugins
+heroku force --help
 
 
 #echo "-----> Moving the netrc generation script into app/.profile.d"
@@ -73,4 +73,4 @@ $HEROKU_CLIENT force --help
 #cp "$BUILDPACK_DIR/bin/gen-netrc.sh" $BUILD_DIR/.profile.d/
 #chmod +x $BUILD_DIR/.profile.d/gen-netrc.sh
 
-echo "-----> heroku toolbelt installation done"
+echo "-----> Heroku CLI installation done"
