@@ -62,10 +62,10 @@ fi
 mkdir $BUILD_DIR/.profile.d
 cat <<EOF >$BUILD_DIR/.profile.d/heroku-cli.sh
 echo "Setting PATH for Heroku CLI and XDG_DATA_HOME for plugins"
-export PATH="$PATH:~/$VENDORED_HEROKU_CLI/heroku/bin"
-export XDG_DATA_HOME="~/.local"
-echo "$PATH"
-echo "$XDG_DATA_HOME"
+export PATH="\$PATH:\$HOME/$VENDORED_HEROKU_CLI/heroku/bin"
+export XDG_DATA_HOME="\$HOME/.local"
+echo "PATH=\$PATH"
+echo "XDG_DATA_HOME=\$XDG_DATA_HOME"
 EOF
 
 export PATH="$PATH:$BUILD_DIR/$VENDORED_HEROKU_CLI/heroku/bin"
