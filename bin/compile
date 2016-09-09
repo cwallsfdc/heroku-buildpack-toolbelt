@@ -61,11 +61,12 @@ fi
 
 mkdir $BUILD_DIR/.profile.d
 cat <<EOF >$BUILD_DIR/.profile.d/heroku-cli.sh
-export PATH="$PATH:./$VENDORED_HEROKU_CLI/heroku/bin"
-export XDG_DATA_HOME="$BUILD_DIR/.local"
+export PATH="$PATH:~/$VENDORED_HEROKU_CLI/heroku/bin"
+export XDG_DATA_HOME="~/.local"
 EOF
 
-source $BUILD_DIR/.profile.d/heroku-cli.sh
+export PATH="$PATH:$BUILD_DIR/$VENDORED_HEROKU_CLI/heroku/bin"
+export XDG_DATA_HOME="$BUILD_DIR/.local"
 echo "$PATH"
 echo "$XDG_DATA_HOME"
 
