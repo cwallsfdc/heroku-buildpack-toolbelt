@@ -58,6 +58,12 @@ else
   wget -qO- $HEROKU_CLIENT_URL | tar xz
 fi
 
+HEROKU_CLIENT="$VENDORED_TOOLBELT/bin/heroku"
+$HEROKU_CLIENT plugins:install salesforce-alm-dev
+$HEROKU_CLIENT plugins
+$HEROKU_CLIENT --help
+$HEROKU_CLIENT force --help
+
 mv heroku-client/* .
 rmdir heroku-client
 
