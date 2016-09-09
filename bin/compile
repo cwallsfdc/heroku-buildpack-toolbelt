@@ -46,12 +46,12 @@ function package_download() {
 echo "-----> Fetching and vendoring Heroku CLI into slug"
 
 # vendor directories
-VENDORED_TOOLBELT="vendor/heroku-toolbelt"
+VENDORED_HEROKU_CLI="vendor/heroku-cli"
 
 # download and extract the client tarball
-rm -rf "$BUILD_DIR/$VENDORED_TOOLBELT"
-mkdir -p "$BUILD_DIR/$VENDORED_TOOLBELT"
-cd "$BUILD_DIR/$VENDORED_TOOLBELT"
+rm -rf "$BUILD_DIR/$VENDORED_HEROKU_CLI"
+mkdir -p "$BUILD_DIR/$VENDORED_HEROKU_CLI"
+cd "$BUILD_DIR/$VENDORED_HEROKU_CLI"
 
 if [[ -z "$(which wget)" ]]; then
   curl -s $HEROKU_CLIENT_URL | tar xJf -
@@ -59,9 +59,14 @@ else
   wget -qO- $HEROKU_CLIENT_URL | tar xJf -
 fi
 
-cd heroku
-./install
-type heroku
+cat <<EOF >$BUILD_DIR/.profile.d/heroku-cli.sh
+export PATH="$PATH:./$VENDORED_HEROKU_CLI/heroku/bin"
+export XDG_DATA_HOME="$BUILD_DIR/.local"
+EOF
+
+source $BUILD_DIR/.profile.d/heroku-cli.sh
+echo "$PATH"
+echo "$XDG_DATA_HOME"
 
 heroku plugins:install salesforce-alm-dev
 heroku plugins
