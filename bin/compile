@@ -59,6 +59,7 @@ else
   wget -qO- $HEROKU_CLIENT_URL | tar xJf -
 fi
 
+mkdir $BUILD_DIR/.profile.d
 cat <<EOF >$BUILD_DIR/.profile.d/heroku-cli.sh
 export PATH="$PATH:./$VENDORED_HEROKU_CLI/heroku/bin"
 export XDG_DATA_HOME="$BUILD_DIR/.local"
