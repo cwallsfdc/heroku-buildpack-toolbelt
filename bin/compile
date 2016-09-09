@@ -61,8 +61,11 @@ fi
 
 mkdir $BUILD_DIR/.profile.d
 cat <<EOF >$BUILD_DIR/.profile.d/heroku-cli.sh
+echo "Setting PATH for Heroku CLI and XDG_DATA_HOME for plugins"
 export PATH="$PATH:~/$VENDORED_HEROKU_CLI/heroku/bin"
 export XDG_DATA_HOME="~/.local"
+echo "$PATH"
+echo "$XDG_DATA_HOME"
 EOF
 
 export PATH="$PATH:$BUILD_DIR/$VENDORED_HEROKU_CLI/heroku/bin"
@@ -72,7 +75,9 @@ echo "$XDG_DATA_HOME"
 
 heroku plugins:install salesforce-alm-dev
 heroku plugins
-heroku force --help
+#heroku force --help
+
+ls $XDG_DATA_HOME/*
 
 
 #echo "-----> Moving the netrc generation script into app/.profile.d"
